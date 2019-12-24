@@ -63,6 +63,17 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
+/* mpc commands */
+static const char *mpdtoggle[]	= { "mpc", "toggle", NULL};
+static const char *mpdstop[]	= { "mpc", "stop", NULL};
+static const char *mpdnext[]	= { "mpc", "next", NULL};
+static const char *mpdprev[]	= { "mpc", "prev", NULL};
+static const char *mpdvolp[]	= { "mpc", "volume", "+5", NULL};
+static const char *mpdvolm[]	= { "mpc", "volume", "-5", NULL};
+static const char *mpdseekp[]	= { "mpc", "seek", "+2%", NULL};
+static const char *mpdseekm[]	= { "mpc", "seek", "-2%", NULL};
+
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -99,6 +110,16 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+
+	/* Mediakeys mpd controls */
+	{ 0,				XF86XK_AudioPlay,		spawn,	{.v = mpdtoggle } },
+	{ 0,				XF86XK_AudioStop,		spawn,	{.v = mpdstop } },
+	{ 0,				XF86XK_AudioNext,		spawn,	{.v = mpdnext } },
+	{ 0,				XF86XK_AudioPrev,		spawn,	{.v = mpdprev } },
+	{ 0,				XF86XK_AudioRaiseVolume		spawn,	{.v = mpdvolp } },
+	{ 0,				XF86XK_AudioLowerVolume,	spawn,	{.v = mpdvolm } },
+	{ MODKEY,			XK_bracketright,		spawn,	{.v = mpdseekp } },
+	{ MODKEY,			XK_bracketleft,			spawn,	{.v = mpdseekm } },
 };
 
 /* button definitions */

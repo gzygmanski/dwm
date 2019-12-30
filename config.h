@@ -76,14 +76,14 @@ static const char *mpdtoggle[]	= { "mpc", "toggle", NULL };
 static const char *mpdstop[]	= { "mpc", "stop", NULL };
 static const char *mpdnext[]	= { "mpc", "next", NULL };
 static const char *mpdprev[]	= { "mpc", "prev", NULL };
-static const char *mpdvolp[]	= { "mpc", "volume", "+5", NULL };
-static const char *mpdvolm[]	= { "mpc", "volume", "-5", NULL };
+static const char *mpdvolp[]	= { "volpm", "-s", "mpd", "-i", "2", NULL };
+static const char *mpdvolm[]	= { "volpm", "-s", "mpd", "-d", "2", NULL };
 static const char *mpdseekp[]	= { "mpc", "seek", "+2%", NULL };
 static const char *mpdseekm[]	= { "mpc", "seek", "-2%", NULL };
 
 /* volume commands */
-static const char *volp[]	= { "pactl", "set-sink-volume", "0", "+2%", NULL };
-static const char *volm[]	= { "pactl", "set-sink-volume", "0", "-2%", NULL };
+static const char *volp[]	= { "volpm", "-i", "2", NULL };
+static const char *volm[]	= { "volpm", "-d", "2", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */

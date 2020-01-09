@@ -1,20 +1,19 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 0;        /* gaps between windows */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 2;        /* vertical padding for statusbar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { "monospace:pixelsize=16:antialias=true:autohint=false" };
+static const char dmenufont[]       = "monospace:pixelsize=16:antialias=true:autohint=false";
 static const char col_gray1[]       = "#282a36";
 static const char col_gray2[]       = "#44475a";
 static const char col_gray3[]       = "#f8f8f2";
 static const char col_gray4[]       = "#f8f8f2";
-static const char col_cyan[]        = "#8be9fd";
+static const char col_cyan[]        = "#bd93f9";
 static const unsigned int baralpha = 0xF5;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
@@ -39,6 +38,7 @@ static const Rule rules[] = {
 	/* class      		instance    title       tags mask     isfloating   monitor */
 	{ "Steam",	  	NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "qutebrowser",  	NULL,       NULL,       1 << 1,       0,           -1 },
+//	{ NULL,  	        NULL,       "GLava",    1 << 1,       1,           -1 },
 };
 
 /* layout(s) */
@@ -48,9 +48,9 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "﩯",      tile },    /* first entry is default */
+	{ "",      NULL },    /* no layout function means floating behavior */
+	{ "ﱢ",      monocle },
 };
 
 /* key definitions */
@@ -80,10 +80,11 @@ static const char *mpdvolp[]	= { "volpm", "-s", "mpd", "-i", "2", NULL };
 static const char *mpdvolm[]	= { "volpm", "-s", "mpd", "-d", "2", NULL };
 static const char *mpdseekp[]	= { "mpc", "seek", "+2%", NULL };
 static const char *mpdseekm[]	= { "mpc", "seek", "-2%", NULL };
+static const char *mpdinfo[]    = { "mpdinfo", NULL };
 
 /* volume commands */
-static const char *volp[]	= { "volpm", "-i", "2", NULL };
-static const char *volm[]	= { "volpm", "-d", "2", NULL };
+static const char *volp[]	= { "volpm", "-s", "default", "-i", "2", NULL };
+static const char *volm[]	= { "volpm", "-s", "default", "-d", "2", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -133,6 +134,7 @@ static Key keys[] = {
 	{ 0,				XF86XK_AudioLowerVolume,	spawn,	{.v = mpdvolm } },
 	{ MODKEY,			XK_bracketright,		spawn,	{.v = mpdseekp } },
 	{ MODKEY,			XK_bracketleft,			spawn,	{.v = mpdseekm } },
+	{ MODKEY,			XK_slash,			spawn,	{.v = mpdinfo } },
 
 	/* volume controls */
 	{ MODKEY,		        XK_equal,			spawn,	{.v = volp } },

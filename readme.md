@@ -9,6 +9,7 @@ Patches
 - dwm-monoclesymbol-6.2.diff
 - dwm-statuspadding-20150524-c8e9479.diff
 - dwm-noborder-6.2.diff
+- dwm-rotatestack-20161021-ab9571b.diff
 
 Screens
 -------

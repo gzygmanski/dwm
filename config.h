@@ -13,7 +13,7 @@ static const char col_gray1[]       = "#282a36";
 static const char col_gray2[]       = "#44475a";
 static const char col_gray3[]       = "#f8f8f2";
 static const char col_gray4[]       = "#f8f8f2";
-static const char col_cyan[]        = "#bd93f9";
+static const char col_cyan[]        = "#bbbbbb";
 static const unsigned int baralpha = 0xF5;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
@@ -82,6 +82,16 @@ static const char *mpdvolm[]	= { "volpm", "-s", "mpd", "-d", "2", NULL };
 static const char *mpdseekp[]	= { "mpc", "seek", "+2%", NULL };
 static const char *mpdseekm[]	= { "mpc", "seek", "-2%", NULL };
 static const char *mpdinfo[]    = { "mpdinfo", NULL };
+static const char *mpdrate0[]   = { "mpd-rate", "0", NULL };
+static const char *mpdrate1[]   = { "mpd-rate", "1", NULL };
+static const char *mpdrate2[]   = { "mpd-rate", "2", NULL };
+static const char *mpdrate3[]   = { "mpd-rate", "3", NULL };
+static const char *mpdrate4[]   = { "mpd-rate", "4", NULL };
+static const char *mpdrate5[]   = { "mpd-rate", "5", NULL };
+static const char *mpdfav0[]    = { "mpd-fav", "0", NULL };
+static const char *mpdfav1[]    = { "mpd-fav", "1", NULL };
+static const char *mpdfav2[]    = { "mpd-fav", "2", NULL };
+
 
 /* volume commands */
 static const char *volp[]	= { "volpm", "-s", "default", "-i", "2", NULL };
@@ -142,7 +152,15 @@ static Key keys[] = {
 	/* volume controls */
 	{ MODKEY,		        XK_equal,			spawn,	{.v = volp } },
 	{ MODKEY,		        XK_minus,			spawn,	{.v = volm } },
-
+        { MODKEY,                       XK_F1,                          spawn,  {.v = mpdrate1 } },
+        { MODKEY,                       XK_F2,                          spawn,  {.v = mpdrate2 } },
+        { MODKEY,                       XK_F3,                          spawn,  {.v = mpdrate3 } },
+        { MODKEY,                       XK_F4,                          spawn,  {.v = mpdrate4 } },
+        { MODKEY,                       XK_F5,                          spawn,  {.v = mpdrate5 } },
+        { MODKEY,                       XK_F6,                          spawn,  {.v = mpdfav0 } },
+        { MODKEY,                       XK_F7,                          spawn,  {.v = mpdfav1 } },
+        { MODKEY,                       XK_F11,                         spawn,  {.v = mpdrate0 } },
+        { MODKEY,                       XK_F12,                         spawn,  {.v = mpdfav2 } },
 };
 
 /* button definitions */

@@ -1,25 +1,26 @@
 /* See LICENSE file for copyright and license details. */
-
+#include "movestack.c"
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
-static const int vertpadbar         = 2;        /* vertical padding for statusbar */
-static const char *fonts[]          = { "monospace:pixelsize=16:antialias=true:autohint=false:style=bold" };
-static const char dmenufont[]       = "monospace:pixelsize=16:antialias=true:autohint=false:style=bold";
+static const int vertpadbar         = 8;        /* vertical padding for statusbar */
+static const char *fonts[]          = { "monospace:pixelsize=14:antialias=true:autohint=false:style=bold" };
+static const char dmenufont[]       = "monospace:pixelsize=14:antialias=true:autohint=false:style=bold";
 static const char nord1[]           = "#2e3440";
 static const char nord2[]           = "#3b4252";
 static const char nord3[]           = "#434c5e";
 static const char nord4[]           = "#4c566a";
 static const char nord5[]           = "#e5e9f0";
+static const char nord6[]           = "#5e81ac";
 static const unsigned int baralpha = 0xFF;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { nord5,     nord1,     nord2},
-	[SchemeSel]  = { nord5,     nord3,     nord5},
+	[SchemeNorm] = { nord5,     nord2,     nord1},
+	[SchemeSel]  = { nord5,     nord3,     nord6},
 };
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
@@ -67,7 +68,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nord1, "-nf", nord5, "-sb", nord3, "-sf", nord5, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nord1, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "0", "-y", "23", "-w", "1920", "-h", "23", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "qutebrowser", NULL };
 static const char *ncmpcppcmd[] = { "st", "-e", "ncmpcpp", NULL };
@@ -104,8 +105,8 @@ static Key keys[] = {
 	{ MODKEY,	                XK_grave,  spawn,          {.v = browsercmd} },
 	{ MODKEY|ShiftMask,             XK_m, 	   spawn,          {.v = ncmpcppcmd} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
         { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },

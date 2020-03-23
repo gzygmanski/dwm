@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 #include "movestack.c"
 /* appearance */
-static const unsigned int borderpx  = 3;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int gappx     = 20;       /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -84,6 +84,12 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "qutebrowser", NULL };
 static const char *ncmpcppcmd[] = { "st", "-e", "ncmpcpp", NULL };
 
+/* mpv-pip commands */
+static const char *mpvpipup[]   = { "mpv-pip", "--up", NULL };
+static const char *mpvpipdown[] = { "mpv-pip", "--down", NULL };
+static const char *mpvpiptoggle[] = { "mpv-pip", "--toggle", NULL };
+static const char *mpvpipclose[] = { "mpv-pip", "--close", NULL };
+
 /* mpc commands */
 static const char *mpdtoggle[]	= { "mpc", "toggle", NULL };
 static const char *mpdstop[]	= { "mpc", "stop", NULL };
@@ -150,7 +156,13 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 
-	/* Mediakeys mpd controls */
+        /* mpv pip control */
+	{ MODKEY,			XK_Prior,       		spawn,	{.v = mpvpipup } },
+	{ MODKEY,			XK_Next,         		spawn,	{.v = mpvpipdown } },
+	{ MODKEY,       		XK_backslash,          		spawn,	{.v = mpvpiptoggle } },
+	{ MODKEY,			XK_BackSpace,         		spawn,	{.v = mpvpipclose } },
+
+	/* mediakeys mpd controls */
 	{ 0,				XF86XK_AudioPlay,		spawn,	{.v = mpdtoggle } },
 	{ 0,				XF86XK_AudioStop,		spawn,	{.v = mpdstop } },
 	{ 0,				XF86XK_AudioNext,		spawn,	{.v = mpdnext } },

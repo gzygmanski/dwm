@@ -159,8 +159,8 @@ static Key keys[] = {
         /* mpv pip control */
 	{ MODKEY,			XK_Prior,       		spawn,	{.v = mpvpipup } },
 	{ MODKEY,			XK_Next,         		spawn,	{.v = mpvpipdown } },
-	{ MODKEY,       		XK_backslash,          		spawn,	{.v = mpvpiptoggle } },
-	{ MODKEY,			XK_BackSpace,         		spawn,	{.v = mpvpipclose } },
+	{ MODKEY,       		XK_Insert,          		spawn,	{.v = mpvpiptoggle } },
+	{ MODKEY,			XK_Delete,         		spawn,	{.v = mpvpipclose } },
 
 	/* mediakeys mpd controls */
 	{ 0,				XF86XK_AudioPlay,		spawn,	{.v = mpdtoggle } },

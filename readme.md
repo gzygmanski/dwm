@@ -17,5 +17,5 @@ nord
 
 Screens
 -------
-![screen1](https://raw.githubusercontent.com/gzygmanski/shiss-dwm/shiss-dwm/screen1.png "Busy")
-![screen2](https://raw.githubusercontent.com/gzygmanski/shiss-dwm/shiss-dwm/screen2.png "Clean")
+![screen1](https://raw.githubusercontent.com/gzygmanski/shiss-dwm/barpadding/screen1.png "Busy")
+![screen2](https://raw.githubusercontent.com/gzygmanski/shiss-dwm/barpadding/screen2.png "Clean")

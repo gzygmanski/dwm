@@ -6,6 +6,8 @@ static const unsigned int gappx     = 20;       /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static const int vertpad            = 0;
+static const int sidepad            = 20;
 static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 8;        /* vertical padding for statusbar */
 static const char *fonts[]          = { "monospace:pixelsize=14:antialias=true:autohint=false:style=bold" };

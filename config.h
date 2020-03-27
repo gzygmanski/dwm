@@ -81,7 +81,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 /* under bar */
 /* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nord1, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "0", "-y", "23", "-w", "1920", "-h", "23", NULL }; */
 /* on top of bar */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nord1, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "20", "-y", "0", "-w", "1880", "-h", "23", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nord2, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "20", "-y", "0", "-w", "1880", "-h", "23", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "qutebrowser", NULL };
 static const char *ncmpcppcmd[] = { "st", "-e", "ncmpcpp", NULL };
@@ -89,6 +89,7 @@ static const char *ncmpcppcmd[] = { "st", "-e", "ncmpcpp", NULL };
 /* mpv-pip commands */
 static const char *mpvpipup[]   = { "mpv-pip", "--up", NULL };
 static const char *mpvpipdown[] = { "mpv-pip", "--down", NULL };
+static const char *mpvpipcenter[] = { "mpv-pip", "--center", NULL };
 static const char *mpvpiptoggle[] = { "mpv-pip", "--toggle", NULL };
 static const char *mpvpipclose[] = { "mpv-pip", "--close", NULL };
 
@@ -161,6 +162,7 @@ static Key keys[] = {
         /* mpv pip control */
 	{ MODKEY,			XK_Prior,       		spawn,	{.v = mpvpipup } },
 	{ MODKEY,			XK_Next,         		spawn,	{.v = mpvpipdown } },
+	{ MODKEY,			XK_Home,         		spawn,	{.v = mpvpipcenter } },
 	{ MODKEY,       		XK_Insert,          		spawn,	{.v = mpvpiptoggle } },
 	{ MODKEY,			XK_Delete,         		spawn,	{.v = mpvpipclose } },
 

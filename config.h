@@ -81,7 +81,8 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 /* under bar */
 /* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nord1, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "0", "-y", "23", "-w", "1920", "-h", "23", NULL }; */
 /* on top of bar */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nord2, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "20", "-y", "0", "-w", "1880", "-h", "23", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-p", "  Run:", "-m", dmenumon, "-fn", dmenufont, "-nb", nord2, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "20", "-y", "0", "-w", "1880", "-h", "23", NULL };
+static const char *tvwatchcmd[] = { "tvwatch", "  Watch:", dmenumon, dmenufont, nord2, nord5, nord6, nord5, "20", "0", "1880", "23", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "qutebrowser", NULL };
 static const char *ncmpcppcmd[] = { "st", "-e", "ncmpcpp", NULL };
@@ -121,6 +122,7 @@ static const char *volm[]	= { "volpm", "-s", "default", "-d", "2", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_w,      spawn,          {.v = tvwatchcmd } },
 	{ MODKEY,	                XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,	                XK_grave,  spawn,          {.v = browsercmd} },
 	{ MODKEY|ShiftMask,             XK_m, 	   spawn,          {.v = ncmpcppcmd} },

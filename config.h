@@ -95,13 +95,14 @@ static const char *newsboatcmd[] = { "st", "-e", "newsboat", NULL };
 static const char *lfcmd[] = { "st", "-e", "lf", NULL };
 
 /* mpv-pip commands */
-static const char *mpvpipup[]   = { "mpv-pip", "--up", NULL };
-static const char *mpvpipdown[] = { "mpv-pip", "--down", NULL };
-static const char *mpvpipleft[] = { "mpv-pip", "--left", NULL };
+static const char *mpvpipup[]   = { "mpv-pip", "--disable-watcher", "--up", NULL };
+static const char *mpvpipdown[] = { "mpv-pip", "--disable-watcher", "--down", NULL };
+static const char *mpvpipleft[] = { "mpv-pip", "--disable-watcher", "--left", NULL };
 static const char *mpvpipcenter[] = { "mpv-pip", "--center", NULL };
 static const char *mpvpiptoggle[] = { "mpv-pip", "--toggle", NULL };
 static const char *mpvpipforward[] = { "mpv-pip", "--seek-forward", NULL };
 static const char *mpvpipbackward[] = { "mpv-pip", "--seek-backward", NULL };
+static const char *mpvpipwatcher[] = { "mpv-pip", "--toggle-watcher", NULL };
 static const char *mpvpipclose[] = { "mpv-pip", "--close", NULL };
 
 /* mpc commands */
@@ -183,6 +184,7 @@ static Key keys[] = {
 	{ MODKEY,       		XK_Insert,          		spawn,	{.v = mpvpiptoggle } },
 	{ MODKEY|ShiftMask,   		XK_bracketright,       		spawn,	{.v = mpvpipforward } },
 	{ MODKEY|ShiftMask,    		XK_bracketleft,        		spawn,	{.v = mpvpipbackward } },
+	{ MODKEY,			XK_backslash,         		spawn,	{.v = mpvpipwatcher } },
 	{ MODKEY,			XK_Delete,         		spawn,	{.v = mpvpipclose } },
 
 	/* mediakeys mpd controls */

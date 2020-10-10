@@ -1,28 +1,29 @@
 /* See LICENSE file for copyright and license details. */
 #include "movestack.c"
+#include "tcl.c"
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 20;       /* gap pixel between windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int gappx     = 0;       /* gap pixel between windows */
+static const unsigned int snap      = 5;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 0;
-static const int sidepad            = 20;
-static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
+static const int sidepad            = 0;
+static const int horizpadbar        = 8;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 8;        /* vertical padding for statusbar */
-static const char *fonts[]          = { "monospace:pixelsize=14:antialias=true:autohint=false:style=bold" };
-static const char dmenufont[]       = "monospace:pixelsize=14:antialias=true:autohint=false:style=bold";
-static const char nord1[]           = "#2e3440";
+static const char *fonts[]          = { "sans:pixelsize=14:antialias=true:autohint=true:style=regular" };
+static const char dmenufont[]       = "sans:pixelsize=14:antialias=true:autohint=true:style=regular";
+static const char nord1[]           = "#000000";
 static const char nord2[]           = "#3b4252";
 static const char nord3[]           = "#434c5e";
 static const char nord4[]           = "#4c566a";
 static const char nord5[]           = "#e5e9f0";
-static const char nord6[]           = "#5e81ac";
-static const unsigned int baralpha = 0xFF;
+static const char nord6[]           = "#bf616a";
+static const unsigned int baralpha = 0xff;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { nord5,     nord2,     nord1},
+	[SchemeNorm] = { nord5,     nord2,     nord2},
 	[SchemeSel]  = { nord5,     nord3,     nord6},
 };
 static const unsigned int alphas[][3]      = {
@@ -38,7 +39,8 @@ static const unsigned int alphas[][3]      = {
 // roman
 /* static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" }; */
 // arabic
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+/* static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }; */
+static const char *tags[] = { "alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota" };
 static const char *tagsalt[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
@@ -47,8 +49,10 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      		instance            title           tags mask     isfloating   monitor */
-	{ "Steam",	  	NULL,               NULL,           1 << 2,       0,           -1 },
-	{ NULL,	  	        NULL,               "Friends List", 1 << 2,       1,           -1 },
+	{ NULL,  	        NULL,               "Friends List", 1,            0,            1 },
+	{ NULL,	  	        NULL,               "Steam",        1 << 2,       0,            0 },
+	{ "discord",  	        NULL,               NULL,           1,            0,            1 },
+	{ "TeamSpeak 3",        NULL,               NULL,           1,            0,            1 },
 	{ "qutebrowser",  	NULL,               NULL,           1 << 1,       0,           -1 },
 	{ "mpv",  	        "mpv-center",       NULL,           0,            1,           -1 },
 };
@@ -63,6 +67,7 @@ static const Layout layouts[] = {
 	{ "﩯 t",      tile },    /* first entry is default */
 	{ " f",      NULL },    /* no layout function means floating behavior */
 	{ "ﱢ m",      monocle },
+        { "ﰦ c",      tcl},
 };
 
 /* key definitions */
@@ -81,17 +86,22 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 /* under bar */
 /* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nord1, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "0", "-y", "23", "-w", "1920", "-h", "23", NULL }; */
 /* on top of bar */
-static const char *dmenucmd[] = { "dmenu_run", "-p", "  Run:", "-m", dmenumon, "-fn", dmenufont, "-nb", nord2, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "20", "-y", "0", "-w", "1880", "-h", "23", NULL };
-static const char *tvwatchcmd[] = { "tvwatch", "  Watch:", dmenumon, dmenufont, nord2, nord5, nord6, nord5, "20", "0", "1880", "23", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-p", "  Run:", "-m", dmenumon, "-fn", dmenufont, "-nb", nord2, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "0", "-y", "0", "-w", "1920", "-h", "25", NULL };
+static const char *tvwatchcmd[] = { "tvwatch", "  Watch:", dmenumon, dmenufont, nord2, nord5, nord6, nord5, "20", "0", "1880", "25", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "qutebrowser", NULL };
 static const char *ncmpcppcmd[] = { "st", "-e", "ncmpcpp", NULL };
+static const char *newsboatcmd[] = { "st", "-e", "newsboat", NULL };
+static const char *lfcmd[] = { "st", "-e", "lf", NULL };
 
 /* mpv-pip commands */
 static const char *mpvpipup[]   = { "mpv-pip", "--up", NULL };
 static const char *mpvpipdown[] = { "mpv-pip", "--down", NULL };
+static const char *mpvpipleft[] = { "mpv-pip", "--left", NULL };
 static const char *mpvpipcenter[] = { "mpv-pip", "--center", NULL };
 static const char *mpvpiptoggle[] = { "mpv-pip", "--toggle", NULL };
+static const char *mpvpipforward[] = { "mpv-pip", "--seek-forward", NULL };
+static const char *mpvpipbackward[] = { "mpv-pip", "--seek-backward", NULL };
 static const char *mpvpipclose[] = { "mpv-pip", "--close", NULL };
 
 /* mpc commands */
@@ -126,6 +136,8 @@ static Key keys[] = {
 	{ MODKEY,	                XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,	                XK_grave,  spawn,          {.v = browsercmd} },
 	{ MODKEY|ShiftMask,             XK_m, 	   spawn,          {.v = ncmpcppcmd} },
+	{ MODKEY|ShiftMask,             XK_r, 	   spawn,          {.v = newsboatcmd} },
+	{ MODKEY|ShiftMask,             XK_f, 	   spawn,          {.v = lfcmd} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
@@ -141,6 +153,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+        { MODKEY,                       XK_c,      setlayout,      {.v = &layouts[3]} },
+        { MODKEY|ControlMask,           XK_m,      fullscreen,     {0} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -164,8 +178,11 @@ static Key keys[] = {
         /* mpv pip control */
 	{ MODKEY,			XK_Prior,       		spawn,	{.v = mpvpipup } },
 	{ MODKEY,			XK_Next,         		spawn,	{.v = mpvpipdown } },
-	{ MODKEY,			XK_Home,         		spawn,	{.v = mpvpipcenter } },
+	{ MODKEY,			XK_Home,         		spawn,	{.v = mpvpipleft } },
+	{ MODKEY,			XK_End,         		spawn,	{.v = mpvpipcenter } },
 	{ MODKEY,       		XK_Insert,          		spawn,	{.v = mpvpiptoggle } },
+	{ MODKEY|ShiftMask,   		XK_bracketright,       		spawn,	{.v = mpvpipforward } },
+	{ MODKEY|ShiftMask,    		XK_bracketleft,        		spawn,	{.v = mpvpipbackward } },
 	{ MODKEY,			XK_Delete,         		spawn,	{.v = mpvpipclose } },
 
 	/* mediakeys mpd controls */

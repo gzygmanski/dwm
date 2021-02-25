@@ -13,7 +13,7 @@ static const int horizpadbar        = 8;        /* horizontal padding for status
 static const int vertpadbar         = 8;        /* vertical padding for statusbar */
 static const char *fonts[]          = { "sans:pixelsize=14:antialias=true:autohint=true:style=regular" };
 static const char dmenufont[]       = "sans:pixelsize=14:antialias=true:autohint=true:style=regular";
-static const char nord1[]           = "#000000";
+static const char nord1[]           = "#d08770";
 static const char nord2[]           = "#3b4252";
 static const char nord3[]           = "#434c5e";
 static const char nord4[]           = "#4c566a";
@@ -22,25 +22,32 @@ static const char nord6[]           = "#bf616a";
 static const unsigned int baralpha = 0xff;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { nord5,     nord2,     nord2},
-	[SchemeSel]  = { nord5,     nord3,     nord6},
+	/*                   fg         bg         border   */
+	[SchemeNorm]     = { nord5,     nord2,     nord2},
+	[SchemeSel]      = { nord5,     nord3,     nord6},
+	[SchemeStatus]   = { nord2,     nord5,     nord1},
+	[SchemeTagsSel]  = { nord5,     nord3,     nord1},
+	[SchemeTagsNorm] = { nord5,     nord2,     nord1},
+	[SchemeInfoSel]  = { nord5,     nord4,     nord1},
+	[SchemeInfoNorm] = { nord5,     nord2,     nord1},
 };
 static const unsigned int alphas[][3]      = {
-	/*               fg      bg        border     */
-	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+	/*                   fg      bg        border     */
+	[SchemeNorm]     = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]      = { OPAQUE, baralpha, borderalpha },
+	[SchemeStatus]   = { OPAQUE, baralpha, borderalpha },
+	[SchemeTagsSel]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeTagsNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeInfoSel]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeInfoNorm] = { OPAQUE, baralpha, borderalpha },
 };
 /* tagging */
 // japanese
-/* static const char *tags[] = { "一", "二", "三", "四", "五", "六", "七", "八", "九" }; */
-// gregorian
-/* static const char *tags[] = { "ა", "ბ", "გ", "დ", "ე", "ვ", "ზ", "ჱ", "თ" }; */
+static const char *tags[] = { "一", "二", "三", "四", "五", "六", "七", "八", "九" };
 // roman
 /* static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" }; */
 // arabic
 /* static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }; */
-static const char *tags[] = { "alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota" };
 static const char *tagsalt[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
@@ -53,7 +60,7 @@ static const Rule rules[] = {
 	{ NULL,	  	        NULL,               "Steam",        1 << 2,       0,            0 },
 	{ "discord",  	        NULL,               NULL,           1,            0,            1 },
 	{ "TeamSpeak 3",        NULL,               NULL,           1,            0,            1 },
-	{ "qutebrowser",  	NULL,               NULL,           1 << 1,       0,           -1 },
+	/* { "qutebrowser",  	NULL,               NULL,           1 << 1,       0,           -1 }, */
 	{ "mpv",  	        "mpv-center",       NULL,           0,            1,           -1 },
 };
 
@@ -67,7 +74,7 @@ static const Layout layouts[] = {
 	{ "﩯 t",      tile },    /* first entry is default */
 	{ " f",      NULL },    /* no layout function means floating behavior */
 	{ "ﱢ m",      monocle },
-        { "ﰦ c",      tcl},
+	{ "恵 c",      tcl},
 };
 
 /* key definitions */
@@ -86,8 +93,8 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 /* under bar */
 /* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nord1, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "0", "-y", "23", "-w", "1920", "-h", "23", NULL }; */
 /* on top of bar */
-static const char *dmenucmd[] = { "dmenu_run", "-p", "  Run:", "-m", dmenumon, "-fn", dmenufont, "-nb", nord2, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "0", "-y", "0", "-w", "1920", "-h", "25", NULL };
-static const char *tvwatchcmd[] = { "tvwatch", "  Watch:", dmenumon, dmenufont, nord2, nord5, nord6, nord5, "20", "0", "1880", "25", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-p", "  Run:", "-m", dmenumon, "-fn", dmenufont, "-nb", nord2, "-nf", nord5, "-sb", nord6, "-sf", nord5, "-x", "0", "-y", "0", "-w", "1920", "-h", "27", NULL };
+/* static const char *tvwatchcmd[] = { "tvwatch", "  Watch:", dmenumon, dmenufont, nord2, nord5, nord6, nord5, "20", "0", "1880", "25", NULL }; */
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "qutebrowser", NULL };
 static const char *ncmpcppcmd[] = { "st", "-e", "ncmpcpp", NULL };
@@ -133,9 +140,9 @@ static const char *volm[]	= { "volpm", "-s", "default", "-d", "2", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_w,      spawn,          {.v = tvwatchcmd } },
+	/* { MODKEY,                       XK_w,      spawn,          {.v = tvwatchcmd } }, */
 	{ MODKEY,	                XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,	                XK_grave,  spawn,          {.v = browsercmd} },
+	{ MODKEY,	                XK_w,	   spawn,          {.v = browsercmd} },
 	{ MODKEY|ShiftMask,             XK_m, 	   spawn,          {.v = ncmpcppcmd} },
 	{ MODKEY|ShiftMask,             XK_r, 	   spawn,          {.v = newsboatcmd} },
 	{ MODKEY|ShiftMask,             XK_f, 	   spawn,          {.v = lfcmd} },
@@ -148,6 +155,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_h,      setcfact,       {.f = +0.25} },
+	{ MODKEY|ShiftMask,             XK_l,      setcfact,       {.f = -0.25} },
+	{ MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,	                XK_q,      killclient,     {0} },
@@ -182,8 +192,8 @@ static Key keys[] = {
 	{ MODKEY,			XK_Home,         		spawn,	{.v = mpvpipleft } },
 	{ MODKEY,			XK_End,         		spawn,	{.v = mpvpipcenter } },
 	{ MODKEY,       		XK_Insert,          		spawn,	{.v = mpvpiptoggle } },
-	{ MODKEY|ShiftMask,   		XK_bracketright,       		spawn,	{.v = mpvpipforward } },
-	{ MODKEY|ShiftMask,    		XK_bracketleft,        		spawn,	{.v = mpvpipbackward } },
+	{ MODKEY|ShiftMask,   		XK_Home,       		spawn,	{.v = mpvpipforward } },
+	{ MODKEY|ShiftMask,    		XK_End,        		spawn,	{.v = mpvpipbackward } },
 	{ MODKEY,			XK_backslash,         		spawn,	{.v = mpvpipwatcher } },
 	{ MODKEY,			XK_Delete,         		spawn,	{.v = mpvpipclose } },
 
@@ -208,8 +218,8 @@ static Key keys[] = {
         { MODKEY,                       XK_F5,                          spawn,  {.v = mpdrate5 } },
         { MODKEY,                       XK_F6,                          spawn,  {.v = mpdfav0 } },
         { MODKEY,                       XK_F7,                          spawn,  {.v = mpdfav1 } },
-        { MODKEY,                       XK_F11,                         spawn,  {.v = mpdrate0 } },
-        { MODKEY,                       XK_F12,                         spawn,  {.v = mpdfav2 } },
+        { MODKEY,                       XK_F9,                          spawn,  {.v = mpdrate0 } },
+        { MODKEY,                       XK_F10,                         spawn,  {.v = mpdfav2 } },
 };
 
 /* button definitions */
